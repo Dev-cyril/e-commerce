@@ -1,0 +1,13 @@
+.main{
+    display: flex;
+    justify-content: center;
+}
+.inputDetails{
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.img{
+    width: 40%;
+}
