@@ -1,6 +1,8 @@
+@import '../variables/varibles';
 .main{
     display: flex;
     justify-content: center;
+    border: 2px solid red;
 }
 .inputDetails{
     width: 60%;

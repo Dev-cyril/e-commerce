@@ -1,7 +1,7 @@
-import React from 'react'
-import logo from '../assests/Saverbank.png'
-import img from '../assests/createAccImg.png'
-import '../styles/components/createAccount.scss'
+import React from 'react';
+import logo from '../assests/Saverbank.png';
+import img from '../assests/createAccImg.png';
+import '../styles/components/createAccount.scss';
 
 function CreateAccount() {
   return (
@@ -97,9 +97,9 @@ function CreateAccount() {
                 </form>
             </div>
         </section>
-        <section className='img'>
+        {/* <section className='img'>
             <img src={img} alt='img'/>
-        </section>
+        </section> */}
     </main>
   )
 }
