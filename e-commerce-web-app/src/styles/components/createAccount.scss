@@ -1,12 +1,7 @@
-<<<<<<< HEAD
-@import '../variables/varibles';
-=======
 @import '../variables/varibles.scss';
->>>>>>> 45833ce0bca8a3a29abdc11a63e0755cb11952dd
 .main{
     display: flex;
     justify-content: center;
-    border: 2px solid red;
 }
 .inputDetails{
     width: 40%;
@@ -52,6 +47,14 @@ fieldset {
     button{
         background-color: $primary-button-color;
         color: #fff;
+        width: 90%;
+        height: 40px;
+        border-radius: 8px;
+        :hover {
+            border: 2px solid $primary-button-color;
+            background-color: #fff;
+            color: $primary-button-color;
+        }
     }
 }
 .form-help{

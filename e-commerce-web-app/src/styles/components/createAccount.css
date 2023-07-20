@@ -52,6 +52,14 @@ fieldset {
 .form-group button {
   background-color: rgb(129, 178, 154);
   color: #fff;
+  width: 90%;
+  height: 40px;
+  border-radius: 8px;
+}
+.form-group button :hover {
+  border: 2px solid rgb(129, 178, 154);
+  background-color: #fff;
+  color: rgb(129, 178, 154);
 }
 
 .form-help {

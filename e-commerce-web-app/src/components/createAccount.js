@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react'
 import logo from '../assests/Saverbank.png'
 import img from '../assests/createAccImg.png'
 import '../styles/components/createAccount.css'
-import { db } from "./config/firebase";
+import { db, auth, googleProvider } from "../config/firebase";
 import { collection, addDoc } from "firebase/firestore";
-import { auth, googleProvider } from "../config/firebase";
 import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 
 function CreateAccount() {
@@ -162,14 +161,14 @@ function CreateAccount() {
                         <div class="form-group col-1-2">
                             <div class="form-field">
                                 <span class="form-field-container">
-                                    <button type="submit" value='Sign Up' onClick={submit}></button>
+                                    <button onClick={submit}>Sign Up</button>
                                 </span>
                             </div>
                         </div>
                         <div class="form-group col-1-2">
                             <div class="form-field">
                                 <span class="form-field-container">
-                                    <button type="submit" value='Sign Up using Google Account' onClick={signInWithGoogle}></button>
+                                    <button onClick={signInWithGoogle}>Sign Up using Google Account</button>
                                 </span>
                             </div>
                         </div>
