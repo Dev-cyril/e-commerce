@@ -86,95 +86,91 @@ function CreateAccount() {
             <h2>Create an Account</h2>
             <small>Please enter the required Information</small>
             <div className='inputfields'>
-                <form action="#">
-                    <fieldset>
-                        <div class="form-group col-1-2">
-                            <label for="your-first-name">First Name</label>
-                            <div class="form-field">
-                                <span class="form-field-container">
-                                    <input type="text" name="your-first-name" id="your-first-name"
-                                        placeholder="e.g. Mike" pattern="[A-Za-zÀ-ž\s]{3,}" maxlength="35"
-                                        autocomplete accesskey="f" required onChange={(e) => setFirstName(e.target.value)}/>
-                                    <i class="form-field-icon"></i>
-                                    <p class="form-help">First name should be at least 3 characters and only
-                                        contains letters</p>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="form-group col-1-2">
-                            <label for="your-first-name">Last Name</label>
-                            <div class="form-field">
-                                <span class="form-field-container">
-                                    <input type="text" name="your-last-name" id="your-last-name"
-                                        placeholder="e.g. John" pattern="[A-Za-zÀ-ž\s]{3,}" maxlength="35"
-                                        autocomplete accesskey="l" required onChange={(e) => setLastName(e.target.value)}/>
-                                    <i class="form-field-icon"></i>
-                                    <p class="form-help">Last name should be at least 3 characters and only
-                                        contains letters</p>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="form-group col-1-2">
-                            <label for="your-email">Email Address</label>
-                            <div class="form-field">
-                                <span class="form-field-container">
-                                    <input type="email" name="your-email" id="your-email"
-                                        placeholder="e.g. youremail@gmail.com"
-                                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" maxlength="55" autocomplete
-                                        accesskey="e" required onChange={(e) => setEmail(e.target.value)}/>
-                                    <i class="form-field-icon"></i>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="form-group col-1-2">
-                            <label for="your-email">Phone Number</label>
-                            <div class="form-field">
-                                <span class="form-field-container">
-                                    <input name="your-phone-number" id="your-phone-number"
-                                        placeholder="e.g. +1234567890" maxlength="55" autocomplete
-                                        accesskey="n" required onChange={(e) => setPhoneNumber(e.target.value)}/>
-                                    <i class="form-field-icon"></i>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="form-group col-1-2">
-                            <label for="your-Password">Password</label>
-                            <div class="form-field">
-                                <span class="form-field-container">
-                                    <input type="password" name="your-Password" id="your-Password" maxlength="15" minLength='8' accesskey="p" required 
-                                        onChange={(e) => setPassword(e.target.value)}/>
-                                    <i class="form-field-icon"></i>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="form-group col-1-2">
-                            <label for="your-Password">Confirm Password</label>
-                            <div class="form-field">
-                                <span class="form-field-container">
-                                    <input type="password" name="your-Password" id="your-Password"
-                                        maxlength="15" minLength='8' accesskey="cp" required 
-                                        onChange={(e) => setConfirmPassword(e.target.value)}/>
-                                    <i class="form-field-icon"></i>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="form-group col-1-2">
-                            <div class="form-field">
-                                <span class="form-field-container">
-                                    <button onClick={submit}>Sign Up</button>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="form-group col-1-2">
-                            <div class="form-field">
-                                <span class="form-field-container">
-                                    <button onClick={signInWithGoogle}>Sign Up using Google Account</button>
-                                </span>
-                            </div>
-                        </div>
-                        <n3>Have an account already? <a>Log In</a></n3>
-                    </fieldset>
-                </form>
+                <div class="form-group col-1-2">
+                    <label for="your-first-name">First Name</label>
+                    <div class="form-field">
+                        <span class="form-field-container">
+                            <input type="text" name="your-first-name" id="your-first-name"
+                                placeholder="e.g. Mike" pattern="[A-Za-zÀ-ž\s]{3,}" maxlength="35"
+                                autocomplete accesskey="f" required onChange={(e) => setFirstName(e.target.value)}/>
+                            <i class="form-field-icon"></i>
+                            <p class="form-help">First name should be at least 3 characters and only
+                                contains letters</p>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group col-1-2">
+                    <label for="your-first-name">Last Name</label>
+                    <div class="form-field">
+                        <span class="form-field-container">
+                            <input type="text" name="your-last-name" id="your-last-name"
+                                placeholder="e.g. John" pattern="[A-Za-zÀ-ž\s]{3,}" maxlength="35"
+                                autocomplete accesskey="l" required onChange={(e) => setLastName(e.target.value)}/>
+                            <i class="form-field-icon"></i>
+                            <p class="form-help">Last name should be at least 3 characters and only
+                                contains letters</p>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group col-1-2">
+                    <label for="your-email">Email Address</label>
+                    <div class="form-field">
+                        <span class="form-field-container">
+                            <input type="email" name="your-email" id="your-email"
+                                placeholder="e.g. youremail@gmail.com"
+                                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" maxlength="55" autocomplete
+                                accesskey="e" required onChange={(e) => setEmail(e.target.value)}/>
+                            <i class="form-field-icon"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group col-1-2">
+                    <label for="your-email">Phone Number</label>
+                    <div class="form-field">
+                        <span class="form-field-container">
+                            <input name="your-phone-number" id="your-phone-number"
+                                placeholder="e.g. +1234567890" maxlength="55" autocomplete
+                                accesskey="n" required onChange={(e) => setPhoneNumber(e.target.value)}/>
+                            <i class="form-field-icon"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group col-1-2">
+                    <label for="your-Password">Password</label>
+                    <div class="form-field">
+                        <span class="form-field-container">
+                            <input type="password" name="your-Password" id="your-Password" maxlength="15" minLength='8' accesskey="p" required 
+                                onChange={(e) => setPassword(e.target.value)}/>
+                            <i class="form-field-icon"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group col-1-2">
+                    <label for="your-Password">Confirm Password</label>
+                    <div class="form-field">
+                        <span class="form-field-container">
+                            <input type="password" name="your-Password" id="your-Password"
+                                maxlength="15" minLength='8' accesskey="cp" required 
+                                onChange={(e) => setConfirmPassword(e.target.value)}/>
+                            <i class="form-field-icon"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group col-1-2">
+                    <div class="form-field">
+                        <span class="form-field-container">
+                            <button onClick={submit}>Sign Up</button>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group col-1-2">
+                    <div class="form-field">
+                        <span class="form-field-container">
+                            <button onClick={signInWithGoogle}>Sign Up using Google Account</button>
+                        </span>
+                    </div>
+                </div>
+                <n3>Have an account already? <a>Log In</a></n3>
             </div>
         </section>
         <section className='img'>

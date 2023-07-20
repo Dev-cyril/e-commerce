@@ -23,6 +23,12 @@
 .inputDetails h2 {
   margin: 0;
 }
+.inputDetails .inputfields {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 90%;
+}
 
 .img {
   width: -moz-fit-content;
@@ -55,6 +61,7 @@ fieldset {
   width: 90%;
   height: 40px;
   border-radius: 8px;
+  border: 0;
 }
 .form-group button:hover {
   border: 2px solid rgb(129, 178, 154);
