@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react'
 import logo from '../assests/Saverbank.png'
 import img from '../assests/createAccImg.png'
@@ -179,9 +178,9 @@ function CreateAccount() {
                 </form>
             </div>
         </section>
-        {/* <section className='img'>
+        <section className='img'>
             <img src={img} alt='img'/>
-        </section> */}
+        </section>
     </main>
   )
 }
