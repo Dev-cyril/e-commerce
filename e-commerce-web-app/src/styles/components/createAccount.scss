@@ -41,7 +41,7 @@ fieldset {
         padding-left: 8px;
         border: 1px solid rgba(128, 128, 128, 0.459);
     }
-    input:focus {
+    input:focus, button:focus {
         outline: none;
     }
     button{
@@ -50,11 +50,11 @@ fieldset {
         width: 90%;
         height: 40px;
         border-radius: 8px;
-        :hover {
-            border: 2px solid $primary-button-color;
-            background-color: #fff;
-            color: $primary-button-color;
-        }
+    }
+    button:hover {
+        border: 2px solid $primary-button-color;
+        background-color: #fff;
+        color: $primary-button-color;
     }
 }
 .form-help{
