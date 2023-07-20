@@ -1,15 +1,84 @@
+<<<<<<< HEAD
 @import '../variables/varibles';
+=======
+@import '../variables/varibles.scss';
+>>>>>>> 45833ce0bca8a3a29abdc11a63e0755cb11952dd
 .main{
     display: flex;
     justify-content: center;
     border: 2px solid red;
 }
 .inputDetails{
-    width: 60%;
+    width: 40%;
     display: flex;
     flex-direction: column;
     gap: 10px;
+    .imgContainer, .imgContainer1{
+        background-color: #fff;
+        padding: 0 10px;
+        height: 70px;
+        display: flex;
+        align-items: center;
+    }
+    .imgContainer1{
+        display: none;
+        border: 2px solid red;
+    }
+    h2{
+        margin: 0;
+    }
 }
 .img{
-    width: 40%;
+    width: fit-content;
+    img{
+        width: 360px;
+    }
+}
+fieldset {
+    border: 0;
+}
+.form-group{
+    margin: 20px 0;
+    input{
+        width: 90%;
+        height: 40px;
+        border-radius: 8px;
+        padding-left: 8px;
+        border: 1px solid rgba(128, 128, 128, 0.459);
+    }
+    input:focus {
+        outline: none;
+    }
+    button{
+        background-color: $primary-button-color;
+        color: #fff;
+    }
+}
+.form-help{
+    display: none;
+}
+
+@media (max-width:400px){
+    .main{
+        flex-direction: column-reverse;
+    }
+    .inputDetails {
+        width: 90%;
+        margin: auto;
+        .imgContainer {
+            display: none;
+        }
+        .imgContainer1 {
+            display: flex;
+            position: absolute;
+        }
+    }
+    .img {
+        width: fit-content;
+
+        img {
+            width: 360px;
+            height: 100px;
+        }
+    }
 }
