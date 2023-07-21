@@ -49,6 +49,15 @@ function CreateAccount() {
         'Phone Number': '',
         Password: ''
     }
+
+    //Sign Up function with using email and password from userInfo object
+    const signUp = async (email, password) => {
+        try {
+        await createUserWithEmailAndPassword(auth, email, password);
+        } catch (err) {
+        console.error(err);
+        }
+    };
     const submit = async () => {
         setInputState([validateFirstName(firstName), validateLastName(lastName), validateEmail(email), validatePassword(password, confirmPass)])
         if (!inputState.includes(false)){
@@ -58,7 +67,9 @@ function CreateAccount() {
             userInfo.Password = password;
             userInfo['Phone Number'] = phoneNumber.trim();
             try{
-                await addDoc(userAccountsRef, userInfo)
+                console.log(userInfo);
+                await addDoc(userAccountsRef, userInfo);
+                await signUp(userInfo.Email, userInfo.Password);
             }
             catch(err){
                 alert(err)
