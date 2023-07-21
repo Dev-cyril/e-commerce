@@ -43,7 +43,7 @@ function CreateAccount() {
     }
 
     const validatePhoneNumber = (number) => {
-        if (number.trim.length() >= 5)
+        if (number.trim().length >= 5)
             return true;
         return false;
     }
