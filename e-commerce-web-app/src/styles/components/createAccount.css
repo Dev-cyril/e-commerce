@@ -26,7 +26,7 @@
 .inputDetails .inputfields {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 5px;
   width: 90%;
 }
 
@@ -67,6 +67,18 @@ fieldset {
   border: 2px solid rgb(129, 178, 154);
   background-color: #fff;
   color: rgb(129, 178, 154);
+}
+.form-group .p {
+  display: none;
+}
+.form-group .form-help {
+  color: red;
+}
+.form-group .form-help span {
+  font-style: italic;
+}
+.form-group label > span {
+  color: red;
 }
 
 .form-help {

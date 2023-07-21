@@ -63,6 +63,18 @@ fieldset {
         background-color: #fff;
         color: $primary-button-color;
     }
+    .p{
+        display: none;
+    }
+    .form-help{
+        color: red;
+        span{
+            font-style: italic;
+        }
+    }
+    label >span{
+        color: red;
+    }
 }
 .form-help{
     display: none;

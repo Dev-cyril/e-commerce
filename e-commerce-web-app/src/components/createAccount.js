@@ -14,7 +14,7 @@ function CreateAccount() {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [password, setPassword] = useState('')
     const [confirmPass, setConfirmPassword] = useState('')
-    const [inputState, setInputState] = useState([true, true, true, true, true])
+    const [inputState, setInputState] = useState([true, true, true, true, true, true])
 
     useEffect(() => {
 
@@ -39,6 +39,13 @@ function CreateAccount() {
         const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,15}$/;
         if (password === confirmPassword)
             return passwordPattern.test(password);
+        return false;
+    }
+
+    const validatePhoneNumber = (number) => {
+        if (number.trim.length() >= 5)
+            return true;
+        return false;
     }
 
 
@@ -59,7 +66,7 @@ function CreateAccount() {
         }
     };
     const submit = async () => {
-        setInputState([validateFirstName(firstName), validateLastName(lastName), validateEmail(email), validatePassword(password, confirmPass)])
+        setInputState([validateFirstName(firstName), validateLastName(lastName), validateEmail(email), validatePhoneNumber(phoneNumber), validatePassword(password, confirmPass)])
         if (!inputState.includes(false)){
             userInfo.FirstName = firstName.trim();
             userInfo.LastName = lastName.trim();
@@ -98,33 +105,33 @@ function CreateAccount() {
             <small>Please enter the required Information</small>
             <div className='inputfields'>
                 <div class="form-group col-1-2">
-                    <label for="your-first-name">First Name</label>
+                    <label for="your-first-name">First Name <span>*</span></label>
                     <div class="form-field">
                         <span class="form-field-container">
                             <input type="text" name="your-first-name" id="your-first-name"
                                 placeholder="e.g. Mike" pattern="[A-Za-zÀ-ž\s]{3,}" maxlength="35"
                                 autocomplete accesskey="f" required onChange={(e) => setFirstName(e.target.value)}/>
                             <i class="form-field-icon"></i>
-                            <p class="form-help">First name should be at least 3 characters and only
+                            <p class={`${inputState[0] === true ? 'form-help' : 'p'}`}>First name should be at least 3 characters and only
                                 contains letters</p>
                         </span>
                     </div>
                 </div>
                 <div class="form-group col-1-2">
-                    <label for="your-first-name">Last Name</label>
+                    <label for="your-first-name">Last Name <span>*</span></label>
                     <div class="form-field">
                         <span class="form-field-container">
                             <input type="text" name="your-last-name" id="your-last-name"
                                 placeholder="e.g. John" pattern="[A-Za-zÀ-ž\s]{3,}" maxlength="35"
                                 autocomplete accesskey="l" required onChange={(e) => setLastName(e.target.value)}/>
                             <i class="form-field-icon"></i>
-                            <p class="form-help">Last name should be at least 3 characters and only
+                            <p class={`${inputState[1] === true ? 'form-help' : 'p'}`}>Last name should be at least 3 characters and only
                                 contains letters</p>
                         </span>
                     </div>
                 </div>
                 <div class="form-group col-1-2">
-                    <label for="your-email">Email Address</label>
+                    <label for="your-email">Email Address <span>*</span></label>
                     <div class="form-field">
                         <span class="form-field-container">
                             <input type="email" name="your-email" id="your-email"
@@ -132,32 +139,36 @@ function CreateAccount() {
                                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" maxlength="55" autocomplete
                                 accesskey="e" required onChange={(e) => setEmail(e.target.value)}/>
                             <i class="form-field-icon"></i>
+                            <p class={`${inputState[2] === true ? 'form-help' : 'p'}`}>This field is required and should match the email pattern <span>youremail@domain.com</span></p>
                         </span>
                     </div>
                 </div>
                 <div class="form-group col-1-2">
-                    <label for="your-email">Phone Number</label>
+                    <label for="your-email">Phone Number <span>*</span></label>
                     <div class="form-field">
                         <span class="form-field-container">
                             <input name="your-phone-number" id="your-phone-number"
                                 placeholder="e.g. +1234567890" maxlength="55" autocomplete
                                 accesskey="n" required onChange={(e) => setPhoneNumber(e.target.value)}/>
                             <i class="form-field-icon"></i>
+                            <p class={`${inputState[3] === true ? 'form-help' : 'p'}`}>This field is required</p>
                         </span>
                     </div>
                 </div>
                 <div class="form-group col-1-2">
-                    <label for="your-Password">Password</label>
+                    <label for="your-Password">Password <span>*</span></label>
                     <div class="form-field">
                         <span class="form-field-container">
                             <input type="password" name="your-Password" id="your-Password" maxlength="15" minLength='8' accesskey="p" required 
                                 onChange={(e) => setPassword(e.target.value)}/>
                             <i class="form-field-icon"></i>
+                            <p class={`${inputState[4] === true ? 'form-help' : 'p'}`}>Password length must be at least 8 charactersa, not more than 15 characters and must be the same as confirm password. <br /> 
+                                Must contain at least one uppercase, lowercase, number and a special charcter !@#$%^&*()_+</p>
                         </span>
                     </div>
                 </div>
                 <div class="form-group col-1-2">
-                    <label for="your-Password">Confirm Password</label>
+                    <label for="your-Password">Confirm Password <span>*</span></label>
                     <div class="form-field">
                         <span class="form-field-container">
                             <input type="password" name="your-Password" id="your-Password"
