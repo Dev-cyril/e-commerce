@@ -4,7 +4,7 @@ import img from '../assests/createAccImg.png'
 import '../styles/components/createAccount.css'
 import { db, auth, googleProvider } from "../config/firebase";
 import { collection, addDoc } from "firebase/firestore";
-import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithPopup, onAuthStateChange } from "firebase/auth";
 
 function CreateAccount() {
 
@@ -17,8 +17,11 @@ function CreateAccount() {
     const [inputState, setInputState] = useState([true, true, true, true, true, true])
 
     useEffect(() => {
-
-    }, [])
+        onAuthStateChange(auth, (user) =>{
+            if (user)
+                console.log(user)
+        })
+    }, [auth])
     const userAccountsRef = collection(db, "userAccount");
     const validateFirstName = (name) =>{
         const namePattern = /^[A-Za-zÀ-ž\s]{3,}/;
