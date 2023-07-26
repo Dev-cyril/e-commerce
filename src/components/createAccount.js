@@ -4,7 +4,7 @@ import img from '../assests/createAccImg.png'
 import '../styles/components/createAccount.css'
 import { db, auth, googleProvider } from "../config/firebase";
 import { collection, addDoc } from "firebase/firestore";
-import { createUserWithEmailAndPassword, signInWithPopup, onAuthStateChange } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithPopup, onAuthStateChanged } from "firebase/auth";
 
 function CreateAccount() {
 
@@ -17,7 +17,7 @@ function CreateAccount() {
     const [inputState, setInputState] = useState([true, true, true, true, true, true])
 
     useEffect(() => {
-        onAuthStateChange(auth, (user) =>{
+        onAuthStateChanged(auth, (user) =>{
             if (user)
                 console.log(user)
         })
@@ -51,7 +51,6 @@ function CreateAccount() {
         return false;
     }
 
-
     const userInfo = {
         FirstName: '',
         LastName: '',
@@ -69,7 +68,7 @@ function CreateAccount() {
         }
     };
     const submit = async () => {
-        setInputState([validateFirstName(firstName), validateLastName(lastName), validateEmail(email), validatePhoneNumber(phoneNumber), validatePassword(password, confirmPass)])
+        setInputState([validateFirstName(firstName), validateLastName(lastName), validateEmail(email), validatePhoneNumber(phoneNumber), validatePassword(password, confirmPass), true])
         if (!inputState.includes(false)){
             userInfo.FirstName = firstName.trim();
             userInfo.LastName = lastName.trim();
@@ -97,7 +96,6 @@ function CreateAccount() {
     }
   };
 
-
   return (
     <main className='main'>
         <section className='inputDetails'>
@@ -115,7 +113,7 @@ function CreateAccount() {
                                 placeholder="e.g. Mike" pattern="[A-Za-zÀ-ž\s]{3,}" maxlength="35"
                                 autocomplete accesskey="f" required onChange={(e) => setFirstName(e.target.value)}/>
                             <i class="form-field-icon"></i>
-                            <p class={`${inputState[0] === true ? 'form-help' : 'p'}`}>First name should be at least 3 characters and only
+                            <p class={`${inputState[0] === false ? 'form-help' : 'p'}`}>First name should be at least 3 characters and only
                                 contains letters</p>
                         </span>
                     </div>
@@ -128,7 +126,7 @@ function CreateAccount() {
                                 placeholder="e.g. John" pattern="[A-Za-zÀ-ž\s]{3,}" maxlength="35"
                                 autocomplete accesskey="l" required onChange={(e) => setLastName(e.target.value)}/>
                             <i class="form-field-icon"></i>
-                            <p class={`${inputState[1] === true ? 'form-help' : 'p'}`}>Last name should be at least 3 characters and only
+                            <p class={`${inputState[1] === false ? 'form-help' : 'p'}`}>Last name should be at least 3 characters and only
                                 contains letters</p>
                         </span>
                     </div>
@@ -142,7 +140,7 @@ function CreateAccount() {
                                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" maxlength="55" autocomplete
                                 accesskey="e" required onChange={(e) => setEmail(e.target.value)}/>
                             <i class="form-field-icon"></i>
-                            <p class={`${inputState[2] === true ? 'form-help' : 'p'}`}>This field is required and should match the email pattern <span>youremail@domain.com</span></p>
+                            <p class={`${inputState[2] === false ? 'form-help' : 'p'}`}>This field is required and should match the email pattern <span>youremail@domain.com</span></p>
                         </span>
                     </div>
                 </div>
@@ -154,7 +152,7 @@ function CreateAccount() {
                                 placeholder="e.g. +1234567890" maxlength="55" autocomplete
                                 accesskey="n" required onChange={(e) => setPhoneNumber(e.target.value)}/>
                             <i class="form-field-icon"></i>
-                            <p class={`${inputState[3] === true ? 'form-help' : 'p'}`}>This field is required</p>
+                            <p class={`${inputState[3] === false ? 'form-help' : 'p'}`}>This field is required</p>
                         </span>
                     </div>
                 </div>
@@ -165,7 +163,7 @@ function CreateAccount() {
                             <input type="password" name="your-Password" id="your-Password" maxlength="15" minLength='8' accesskey="p" required 
                                 onChange={(e) => setPassword(e.target.value)}/>
                             <i class="form-field-icon"></i>
-                            <p class={`${inputState[4] === true ? 'form-help' : 'p'}`}>Password length must be at least 8 charactersa, not more than 15 characters and must be the same as confirm password. <br /> 
+                            <p class={`${inputState[4] === false ? 'form-help' : 'p'}`}>Password length must be at least 8 characters, not more than 15 characters and must be the same as confirm password. <br /> 
                                 Must contain at least one uppercase, lowercase, number and a special charcter !@#$%^&*()_+</p>
                         </span>
                     </div>
