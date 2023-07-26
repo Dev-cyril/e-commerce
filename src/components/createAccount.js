@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import logo from '../assests/Saverbank.png'
 import img from '../assests/createAccImg.png'
 import '../styles/components/createAccount.css'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { db, auth, googleProvider } from "../config/firebase";
 import { collection, addDoc } from "firebase/firestore";
 import { createUserWithEmailAndPassword, signInWithPopup, onAuthStateChanged } from "firebase/auth";
@@ -24,7 +24,7 @@ function CreateAccount() {
         Phone_Number: '',
         Password: ''
     })
-  const history = useHistory()
+  const navigate = useNavigate()
 
     useEffect(() => {
         onAuthStateChanged(auth, (user) =>{
@@ -68,7 +68,7 @@ function CreateAccount() {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             console.log(userCredential)
             console.log(userCredential.user)
-            history.push('/dashboard')
+            navigate('/dashboard')
         } catch (err) {
             console.error(err);
         }
@@ -105,7 +105,7 @@ function CreateAccount() {
             console.log(userCredential.user)
             setIsAuthenticated(true)
             await addDoc(userAccountsRef, userInfo)
-            history.push('/dashboard')
+            navigate('/dashboard')
         } catch (err) {
             console.error(err);
         }
