@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import logo from '../assests/Saverbank.png'
 import img from '../assests/createAccImg.png'
 import '../styles/components/createAccount.css'
+import { useHistory } from 'react-router-dom'
 import { db, auth, googleProvider } from "../config/firebase";
 import { collection, addDoc } from "firebase/firestore";
 import { createUserWithEmailAndPassword, signInWithPopup, onAuthStateChanged } from "firebase/auth";
@@ -14,6 +15,7 @@ function CreateAccount() {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [password, setPassword] = useState('')
     const [confirmPass, setConfirmPassword] = useState('')
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [inputState, setInputState] = useState([true, true, true, true, true, true])
     const [userInfo, setUserInfo] =useState({
         FirstName: '',
@@ -22,6 +24,7 @@ function CreateAccount() {
         Phone_Number: '',
         Password: ''
     })
+  const history = useHistory()
 
     useEffect(() => {
         onAuthStateChanged(auth, (user) =>{
@@ -29,6 +32,7 @@ function CreateAccount() {
                 console.log(user)
         })
     }, [auth])
+
     const userAccountsRef = collection(db, "userAccount");
     const validateFirstName = (name) =>{
         const namePattern = /^[A-Za-zÀ-ž\s]{3,}/;
@@ -61,9 +65,12 @@ function CreateAccount() {
     //Sign Up function with using email and password from userInfo object
     const signUp = async (email, password) => {
         try {
-        await createUserWithEmailAndPassword(auth, email, password);
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            console.log(userCredential)
+            console.log(userCredential.user)
+            history.push('/dashboard')
         } catch (err) {
-        console.error(err);
+            console.error(err);
         }
     };
     const submit = async () => {
@@ -80,6 +87,7 @@ function CreateAccount() {
                 console.log(userInfo);
                 await addDoc(userAccountsRef, userInfo);
                 await signUp(userInfo.Email, userInfo.Password);
+                setIsAuthenticated(true)
             }
             catch(err){
                 alert(err)
@@ -92,9 +100,12 @@ function CreateAccount() {
     // google sign in
     const signInWithGoogle = async () => {
         try {
-            await signInWithPopup(auth, googleProvider);
-            
+            const userCredential = await signInWithPopup(auth, googleProvider);
+            console.log(userCredential)
+            console.log(userCredential.user)
+            setIsAuthenticated(true)
             await addDoc(userAccountsRef, userInfo)
+            history.push('/dashboard')
         } catch (err) {
             console.error(err);
         }

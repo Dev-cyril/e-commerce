@@ -1,10 +1,10 @@
 import logo from './logo.svg';
 import './App.css';
-import CreateAccount from './components/createAccount';
+import AppRouter from './routes/AppRouter';
 
 function App() {
   return (
-    <CreateAccount />
+    <AppRouter />
   );
 }
 
