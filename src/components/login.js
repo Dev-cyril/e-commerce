@@ -2,7 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import '../styles/components/createAccount.css'
 
-export default function login() {
+export default function Login() {
     const [password, setPassword] = useState('')
     const [email, setEmail] = useState('');
   return (
