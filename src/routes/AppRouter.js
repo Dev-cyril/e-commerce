@@ -13,8 +13,8 @@ export default function AppRouter({ isAuthenticated }) {
         <Route exact path="/signup" component={CreateAccount} />
         <Route exact path="/signin" component={Login} />
         <PrivateRoute path="/dashboard" component={Dashboard} isAuthenticated={isAuthenticated} />
-        <Route path="/not-found" component={NotFound} />
-        <Redirect to="/not-found" />
+        {/* <Route path="/not-found" component={NotFound} />
+        <Redirect to="/not-found" /> */}
       </Switch>
     </Router>
   );
