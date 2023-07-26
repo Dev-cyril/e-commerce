@@ -17,7 +17,6 @@
     }
     .imgContainer1{
         display: none;
-        border: 2px solid red;
     }
     h2{
         margin: 0;
@@ -31,8 +30,10 @@
 }
 .img{
     width: fit-content;
+    display: flex;
     img{
         width: 360px;
+        flex-grow: 1;
     }
 }
 fieldset {
@@ -68,6 +69,7 @@ fieldset {
     }
     .form-help{
         color: red;
+        display: block;
         span{
             font-style: italic;
         }

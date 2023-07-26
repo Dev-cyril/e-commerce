@@ -18,7 +18,6 @@
 }
 .inputDetails .imgContainer1 {
   display: none;
-  border: 2px solid red;
 }
 .inputDetails h2 {
   margin: 0;
@@ -33,9 +32,11 @@
 .img {
   width: -moz-fit-content;
   width: fit-content;
+  display: flex;
 }
 .img img {
   width: 360px;
+  flex-grow: 1;
 }
 
 fieldset {
@@ -72,8 +73,8 @@ fieldset {
   display: none;
 }
 .form-group .form-help {
-  display: block;
   color: red;
+  display: block;
 }
 .form-group .form-help span {
   font-style: italic;

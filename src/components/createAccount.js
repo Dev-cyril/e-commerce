@@ -15,6 +15,13 @@ function CreateAccount() {
     const [password, setPassword] = useState('')
     const [confirmPass, setConfirmPassword] = useState('')
     const [inputState, setInputState] = useState([true, true, true, true, true, true])
+    const [userInfo, setUserInfo] =useState({
+        FirstName: '',
+        LastName: '',
+        Email: '',
+        Phone_Number: '',
+        Password: ''
+    })
 
     useEffect(() => {
         onAuthStateChanged(auth, (user) =>{
@@ -51,14 +58,6 @@ function CreateAccount() {
         return false;
     }
 
-    const userInfo = {
-        FirstName: '',
-        LastName: '',
-        Email: '',
-        'Phone Number': '',
-        Password: ''
-    }
-
     //Sign Up function with using email and password from userInfo object
     const signUp = async (email, password) => {
         try {
@@ -70,11 +69,13 @@ function CreateAccount() {
     const submit = async () => {
         setInputState([validateFirstName(firstName), validateLastName(lastName), validateEmail(email), validatePhoneNumber(phoneNumber), validatePassword(password, confirmPass), true])
         if (!inputState.includes(false)){
-            userInfo.FirstName = firstName.trim();
-            userInfo.LastName = lastName.trim();
-            userInfo.Email = email.trim();
-            userInfo.Password = password;
-            userInfo['Phone Number'] = phoneNumber.trim();
+            setUserInfo({
+                FirstName: firstName.trim(),
+                LastName: lastName.trim(),
+                Email: email.trim(),
+                Password: password,
+                Phone_Number: phoneNumber.trim()
+            })
             try{
                 console.log(userInfo);
                 await addDoc(userAccountsRef, userInfo);
@@ -85,16 +86,19 @@ function CreateAccount() {
             }
         } else {
             alert('check your details again')
+            return
         }
     }
     // google sign in
     const signInWithGoogle = async () => {
-    try {
-      await signInWithPopup(auth, googleProvider);
-    } catch (err) {
-      console.error(err);
-    }
-  };
+        try {
+            await signInWithPopup(auth, googleProvider);
+            
+            await addDoc(userAccountsRef, userInfo)
+        } catch (err) {
+            console.error(err);
+        }
+    };
 
   return (
     <main className='main'>
