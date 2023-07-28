@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import LandingPage from '../components/landingPage';
 import Dashboard from '../components/dashboard';
@@ -10,22 +10,20 @@ export default function AppRouter({ isAuthenticated }) {
   return (
     <Router>
       <Routes>
-        <Route exact path="/" component={LandingPage} />
-        <Route exact path="/signup" component={CreateAccount} />
-        <Route exact path="/signin" component={Login} />
-        <PrivateRoute path="/dashboard" component={Dashboard} isAuthenticated={isAuthenticated} />
-        <Route path="/not-found" component={Redirect} />
-        <Navigate to="/not-found" />
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/signup" element={<CreateAccount />} />
+        <Route path="/signin" element={<Login />} />
+        {/* <PrivateRoute path="/dashboard" element={<Dashboard />} isAuthenticated={isAuthenticated} /> */}
+        <Route path="/not-found" element={<Redirect />} />
+        <Route path="*" element={<Navigate to="/not-found" />} />
       </Routes>
     </Router>
   );
 }
 
-const PrivateRoute = ({ component: Component, isAuthenticated, ...rest }) => (
+const PrivateRoute = ({ element: Element, isAuthenticated, ...rest }) => (
   <Route
     {...rest}
-    render={(props) =>
-      isAuthenticated ? <Component {...props} /> : <Navigate to="/" />
-    }
+    element={isAuthenticated ? <Element /> : <Navigate to="/signin" />}
   />
 );
