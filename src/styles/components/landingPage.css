@@ -1,7 +1,10 @@
 .landPg {
   margin: auto;
   display: flex;
+  height: 100vh;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   background-color: #fff;
   border: 1px solid rgb(79, 109, 94);
 }
@@ -12,6 +15,6 @@
 .landPg .main button {
   width: 100px;
   height: 40px;
-  background-color: primary-button-color;
+  background-color: rgb(129, 178, 154);
   color: #fff;
 }/*# sourceMappingURL=landingPage.css.map */

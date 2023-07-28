@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { db, auth, googleProvider } from "../config/firebase";
 import { collection, addDoc } from "firebase/firestore";
 import { createUserWithEmailAndPassword, signInWithPopup, onAuthStateChanged } from "firebase/auth";
+import { Link } from 'react-router-dom';
 
 function CreateAccount() {
 
@@ -208,7 +209,7 @@ function CreateAccount() {
                         </span>
                     </div>
                 </div>
-                <n3>Have an account already? <a>Log In</a></n3>
+                <n3>Have an account already? <Link to='/signin'>Log In</Link></n3>
             </div>
         </section>
         <section className='img'>

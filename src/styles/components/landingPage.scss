@@ -2,7 +2,10 @@
 .landPg{
     margin: auto;
     display: flex;
+    height: 100vh;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     background-color: #fff;
     border: 1px solid $nav-divs-bg-border;
     .main{
@@ -11,7 +14,7 @@
         button{
             width: 100px;
             height: 40px;
-            background-color: primary-button-color;
+            background-color: $primary-button-color;
             color: #fff;
         }
     }
