@@ -2,11 +2,16 @@ import React from 'react'
 import { useState } from 'react'
 import '../styles/components/login.css'
 import '../styles/components/createAccount.css'
+import { useNavigate } from 'react-router-dom'
+import { db, auth, googleProvider } from "../config/firebase";
+import { collection, addDoc } from "firebase/firestore";
+import { createUserWithEmailAndPassword, signInWithPopup, onAuthStateChanged } from "firebase/auth";
 import { Link } from 'react-router-dom';
 
 export default function Login() {
     const [password, setPassword] = useState('')
     const [email, setEmail] = useState('');
+    const navigate = useNavigate()
 
     //Sign In function with using email and password from userInfo object
     const signIn = async (email, password) => {
@@ -21,7 +26,7 @@ export default function Login() {
     };
     const submit = async () => {
         try{
-            await signIn(userInfo.Email, userInfo.Password);
+            await signIn(email, password);
         }
         catch(err){
             alert(err)
@@ -31,7 +36,6 @@ export default function Login() {
     const signInWithGoogle = async () => {
         try {
             const userCredential = await signInWithPopup(auth, googleProvider);
-            await addDoc(userAccountsRef, userInfo)
             navigate('/dashboard')
         } catch (err) {
             console.error(err);
