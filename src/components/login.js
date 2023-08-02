@@ -3,9 +3,8 @@ import { useState } from 'react'
 import '../styles/components/login.css'
 import '../styles/components/createAccount.css'
 import { useNavigate } from 'react-router-dom'
-import { db, auth, googleProvider } from "../config/firebase";
-import { collection, addDoc } from "firebase/firestore";
-import { createUserWithEmailAndPassword, signInWithPopup, onAuthStateChanged } from "firebase/auth";
+import { auth, googleProvider } from "../config/firebase";
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { Link } from 'react-router-dom';
 
 export default function Login() {
@@ -16,7 +15,7 @@ export default function Login() {
     //Sign In function with using email and password from userInfo object
     const signIn = async (email, password) => {
         try {
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
             console.log(userCredential)
             console.log(userCredential.user)
             navigate('/dashboard')
@@ -73,7 +72,7 @@ export default function Login() {
         <div class="form-group col-1-2">
             <div class="form-field">
                 <span class="form-field-container">
-                    <button onClick={signInWithGoogle}>Continue with Google</button>
+                    <button type='submit' onClick={signInWithGoogle}>Continue with Google</button>
                 </span>
             </div>
         </div>

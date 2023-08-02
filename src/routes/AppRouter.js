@@ -13,17 +13,10 @@ export default function AppRouter({ isAuthenticated }) {
         <Route path="/" element={<LandingPage />} />
         <Route path="/signup" element={<CreateAccount />} />
         <Route path="/signin" element={<Login />} />
-        {/* <PrivateRoute path="/dashboard" element={<Dashboard />} isAuthenticated={isAuthenticated} /> */}
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/not-found" element={<Redirect />} />
         <Route path="*" element={<Navigate to="/not-found" />} />
       </Routes>
     </Router>
   );
 }
-
-const PrivateRoute = ({ element: Element, isAuthenticated, ...rest }) => (
-  <Route
-    {...rest}
-    element={isAuthenticated ? <Element /> : <Navigate to="/signin" />}
-  />
-);
