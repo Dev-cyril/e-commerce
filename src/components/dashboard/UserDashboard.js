@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import './dashboard.css';
+import React, { useState, createContext } from 'react';
+// import './dashboard.css';
 import Saverbank from '../../assets/Saverbank.png';
 import profilePic from '../../assets/profilePic.png'
 import updateIcon from '../../assets/updateIcon.png'
@@ -12,24 +12,27 @@ import transactionsIcon from "../../assets/transactionsIcon.png";
 import logoutIcon from "../../assets/logoutIcon.png";
 import sendAndReceiveIcon from "../../assets/sendAndReceiveIcon.png";
 
+const UserInfoContext = createContext();
+
 const UserDashboard = ({ components }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const ActiveComponent = components[activeIndex];
+  const [userInfo, setUserInfo] = useState({});
 
   const changeComponent = (index) => {
     setActiveIndex(index);
   };
 
   return (
-    <React.Fragment>
+    <UserInfoContext.Provider value={{ setUserInfo, userInfo }}>
       <div className="sect">
         <nav>
           <div className='logo-container'>
             <img src={Saverbank} alt="Saver Bank Logo" className='BankLogo' />
           </div>
           <div
-            onClick={() => changeComponent(7)}
-            className={`div ${activeIndex === 7 ? "active" : ""}`}
+            onClick={() => changeComponent(0)}
+            className={`div ${activeIndex === 0 ? "active" : ""}`}
           >
             <img src={dashboardIcon} alt="dashboard" />
             <div>
@@ -37,8 +40,8 @@ const UserDashboard = ({ components }) => {
             </div>
           </div>
           <div
-            onClick={() => changeComponent(6)}
-            className={`div ${activeIndex === 6 ? "active" : ""}`}
+            onClick={() => changeComponent(1)}
+            className={`div ${activeIndex === 1 ? "active" : ""}`}
           >
             <img src={cardsAndReceiptIcon} alt="cardsAndReceipt" />
             <div>
@@ -46,8 +49,8 @@ const UserDashboard = ({ components }) => {
             </div>
           </div>
           <div
-            onClick={() => changeComponent(3)}
-            className={`div ${activeIndex === 3 ? "active" : ""}`}
+            onClick={() => changeComponent(2)}
+            className={`div ${activeIndex === 2 ? "active" : ""}`}
           >
             <img src={transactionsIcon} alt="Transactions" />
             <div>
@@ -55,8 +58,8 @@ const UserDashboard = ({ components }) => {
             </div>
           </div>
           <div
-            onClick={() => changeComponent(4)}
-            className={`div ${activeIndex === 4 ? "active" : ""}`}
+            onClick={() => changeComponent(3)}
+            className={`div ${activeIndex === 3 ? "active" : ""}`}
           >
             <img src={navNotificationBell} alt="Notification Bell" />
             <div>
@@ -64,8 +67,8 @@ const UserDashboard = ({ components }) => {
             </div>
           </div>
           <div
-            onClick={() => changeComponent(2)}
-            className={`div ${activeIndex === 2 ? "active" : ""}`}
+            onClick={() => changeComponent(4)}
+            className={`div ${activeIndex === 4 ? "active" : ""}`}
           >
             <img src={sendAndReceiveIcon} alt="Receive" />
             <div>
@@ -82,8 +85,8 @@ const UserDashboard = ({ components }) => {
             </div>
           </div>
           <div
-            onClick={() => changeComponent(0)}
-            className={`div ${activeIndex === 0 ? "active" : ""}`}
+            onClick={() => changeComponent(6)}
+            className={`div ${activeIndex === 6 ? "active" : ""}`}
           >
             <img src={updateIcon} alt="Update" />
             <div>
@@ -91,8 +94,8 @@ const UserDashboard = ({ components }) => {
             </div>
           </div>
           <div
-            onClick={() => changeComponent(1)}
-            className={`div ${activeIndex >= 1 ? "active" : ""}`}
+            onClick={() => changeComponent(7)}
+            className={`div ${activeIndex >= 7 ? "active" : ""}`}
           >
             <img src={deleteIcon} alt="Delete" />
             <div>
@@ -117,7 +120,7 @@ const UserDashboard = ({ components }) => {
               <div className="img">
               <img src = {profilePic} alt='profile pic' className='profile-pic'/>
               </div>
-              <h4>Smith Daniel</h4>
+              <h4>{userInfo.auth.displayName}</h4>
             </div>
           </div>
           <div>
@@ -126,8 +129,8 @@ const UserDashboard = ({ components }) => {
           {ActiveComponent && <ActiveComponent />}
         </div>
       </div>
-    </React.Fragment>
+      </UserInfoContext.Provider>
   );
 };
 
-export default UserDashboard;
+export {UserDashboard, UserInfoContext};

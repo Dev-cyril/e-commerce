@@ -1,140 +1,152 @@
-import React, { useEffect, useState } from 'react'
-import logo from '../assests/Saverbank.png'
-import img from '../assests/createAccImg.png'
-import '../styles/components/createAccount.css'
-import { useNavigate } from 'react-router-dom'
-import { db, auth, googleProvider } from "../config/firebase";
-import { collection, addDoc } from "firebase/firestore";
-import { createUserWithEmailAndPassword, signInWithPopup, onAuthStateChanged } from "firebase/auth";
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { UserInfoContext } from './dashboard/UserDashboard';
+import { db, auth, googleProvider } from '../config/firebase';
+import { collection } from 'firebase/firestore';
+import {
+  createUserWithEmailAndPassword,
+  signInWithPopup,
+  onAuthStateChanged,
+} from 'firebase/auth';
+import logo from '../assets/Saverbank.png';
+import img from '../assets/createAccImg.png';
+import '../styles/components/createAccount.css';
+
 
 function CreateAccount() {
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPass, setConfirmPassword] = useState('');
+  const [inputState, setInputState] = useState([true, true, true, true, true, true]);
 
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [email, setEmail] = useState('');
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const [password, setPassword] = useState('')
-    const [confirmPass, setConfirmPassword] = useState('')
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [inputState, setInputState] = useState([true, true, true, true, true, true])
-    const [userInfo, setUserInfo] =useState({
-        FirstName: '',
-        LastName: '',
-        Email: '',
-        Phone_Number: '',
-        Password: ''
-    })
-  const navigate = useNavigate()
+  const {userInfo, setUserInfo} = useContext(UserInfoContext);
 
-    useEffect(() => {
-        onAuthStateChanged(auth, (user) =>{
-            if (user)
-                console.log(user)
-        })
-    }, [auth])
+  const navigate = useNavigate();
 
-    const userAccountsRef = collection(db, "userAccount");
-    const validateFirstName = (name) =>{
-        const namePattern = /^[A-Za-zÀ-ž\s]{3,}/;
-        return namePattern.test(name);
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) console.log(user);
+    });
+  }, [auth]);
+
+  const userAccountsRef = collection(db, 'userAccount');
+
+  const validateFirstName = (name) => {
+    const namePattern = /^[A-Za-zÀ-ž\s]{3,}/;
+    return namePattern.test(name);
+  };
+
+  const validateLastName = (name) => {
+    const namePattern = /^[A-Za-zÀ-ž\s]{3,}/;
+    return namePattern.test(name);
+  };
+
+  const validateEmail = (email) => {
+    const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
+    return emailPattern.test(email);
+  };
+
+  const validatePassword = (password, confirmPassword) => {
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,15}$/;
+    if (password === confirmPassword) return passwordPattern.test(password);
+    return false;
+  };
+
+  const validatePhoneNumber = (number) => {
+    if (number.trim().length >= 5) return true;
+    return false;
+  };
+
+  // Function to validate all fields and return true if all are valid
+  const isFormValid = () => {
+    return (
+      validateFirstName(firstName) &&
+      validateLastName(lastName) &&
+      validateEmail(email) &&
+      validatePhoneNumber(phoneNumber) &&
+      validatePassword(password, confirmPass)
+    );
+  };
+
+  const signUp = async (email, password) => {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      userCredential.user.auth.displayName = `${firstName.trim()} ${lastName.trim()}`
+      userCredential.user.metadata.phoneNumber = phoneNumber.trim()
+      console.log(userCredential.user);
+      navigate('/signin');
+    } catch (err) {
+      alert(err);
     }
+  };
 
-    const validateLastName = (name) =>{
-        const namePattern = /^[A-Za-zÀ-ž\s]{3,}/;
-        return namePattern.test(name);
+  const submit = async () => {
+    setInputState([
+      validateFirstName(firstName),
+      validateLastName(lastName),
+      validateEmail(email),
+      validatePhoneNumber(phoneNumber),
+      validatePassword(password, confirmPass),
+      true,
+    ]);
+
+    if (isFormValid()) {
+      try {
+        await signUp(email.trim(), password.trim());
+      } catch (err) {
+        alert(err);
+      }
+    } else {
+      alert('Check your details again');
     }
+  };
 
-    const validateEmail = (email) =>{
-        const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
-        return emailPattern.test(email);
+  const signInWithGoogle = async () => {
+    try {
+      const userCredential = await signInWithPopup(auth, googleProvider);
+      setUserInfo(userCredential.user);
+      navigate('/dashboard');
+      console.log(userInfo)
+    } catch (err) {
+      console.error(err);
     }
-
-    const validatePassword = (password, confirmPassword) => {
-        const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,15}$/;
-        if (password === confirmPassword)
-            return passwordPattern.test(password);
-        return false;
-    }
-
-    const validatePhoneNumber = (number) => {
-        if (number.trim().length >= 5)
-            return true;
-        return false;
-    }
-
-    //Sign Up function with using email and password from userInfo object
-    const signUp = async (email, password) => {
-        try {
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            console.log(userCredential)
-            console.log(userCredential.user)
-            navigate('/dashboard')
-        } catch (err) {
-            console.error(err);
-        }
-    };
-    const submit = async () => {
-        setInputState([validateFirstName(firstName), validateLastName(lastName), validateEmail(email), validatePhoneNumber(phoneNumber), validatePassword(password, confirmPass), true])
-        if (!inputState.includes(false)){
-            setUserInfo({
-                FirstName: firstName.trim(),
-                LastName: lastName.trim(),
-                Email: email.trim(),
-                Password: password,
-                Phone_Number: phoneNumber.trim()
-            })
-            try{
-                console.log(userInfo);
-                await addDoc(userAccountsRef, userInfo);
-                await signUp(userInfo.Email, userInfo.Password);
-                setIsAuthenticated(true)
-            }
-            catch(err){
-                alert(err)
-            }
-        } else {
-            alert('check your details again')
-            return
-        }
-    }
-    // google sign in
-    const signInWithGoogle = async () => {
-        try {
-            const userCredential = await signInWithPopup(auth, googleProvider);
-            console.log(userCredential)
-            console.log(userCredential.user)
-            setIsAuthenticated(true)
-            await addDoc(userAccountsRef, userInfo)
-            navigate('/dashboard')
-        } catch (err) {
-            console.error(err);
-        }
-    };
-
+  };
   return (
-    <main className='main'>
-        <section className='inputDetails'>
-            <div className='imgContainer'>
-                <img src={logo} alt='logo'/>
+    <main className="main">
+      <section className="inputDetails">
+        <div className="imgContainer">
+          <img src={logo} alt="logo" />
+        </div>
+        <h2>Create an Account</h2>
+        <small>Please enter the required Information</small>
+        <div className="inputfields">
+          <div className="form-group col-1-2">
+            <label htmlFor="your-first-name">First Name <span>*</span></label>
+            <div className="form-field">
+              <span className="form-field-container">
+                <input
+                  type="text"
+                  name="your-first-name"
+                  id="your-first-name"
+                  placeholder="e.g. Mike"
+                  pattern="[A-Za-zÀ-ž\s]{3,}"
+                  maxLength="35"
+                  autoComplete="off"
+                  accessKey="f"
+                  required
+                  onChange={(e) => setFirstName(e.target.value)}
+                />
+                <i className="form-field-icon"></i>
+                <p className={`${inputState[0] === false ? 'form-help' : 'p'}`}>
+                  First name should be at least 3 characters and only contains letters
+                </p>
+              </span>
             </div>
-            <h2>Create an Account</h2>
-            <small>Please enter the required Information</small>
-            <div className='inputfields'>
-                <div class="form-group col-1-2">
-                    <label for="your-first-name">First Name <span>*</span></label>
-                    <div class="form-field">
-                        <span class="form-field-container">
-                            <input type="text" name="your-first-name" id="your-first-name"
-                                placeholder="e.g. Mike" pattern="[A-Za-zÀ-ž\s]{3,}" maxlength="35"
-                                autocomplete accesskey="f" required onChange={(e) => setFirstName(e.target.value)}/>
-                            <i class="form-field-icon"></i>
-                            <p class={`${inputState[0] === false ? 'form-help' : 'p'}`}>First name should be at least 3 characters and only
-                                contains letters</p>
-                        </span>
-                    </div>
-                </div>
-                <div class="form-group col-1-2">
+          </div>
+          <div class="form-group col-1-2">
                     <label for="your-first-name">Last Name <span>*</span></label>
                     <div class="form-field">
                         <span class="form-field-container">
