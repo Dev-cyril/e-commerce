@@ -1,11 +1,11 @@
 import React, { useState, useContext } from 'react'
 import '../styles/components/login.css'
 import '../styles/components/createAccount.css'
-import { UserInfoContext } from './dashboard/UserDashboard';
 import { useNavigate } from 'react-router-dom'
 import { auth, googleProvider } from "../config/firebase";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { Link } from 'react-router-dom';
+import { UserInfoContext } from '../routes/AppRouter';
 
 export default function Login() {
     const [password, setPassword] = useState('')

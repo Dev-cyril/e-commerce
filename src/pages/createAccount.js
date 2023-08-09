@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { UserInfoContext } from './dashboard/UserDashboard';
 import { db, auth, googleProvider } from '../config/firebase';
 import { collection } from 'firebase/firestore';
 import {
@@ -11,7 +10,7 @@ import {
 import logo from '../assets/Saverbank.png';
 import img from '../assets/createAccImg.png';
 import '../styles/components/createAccount.css';
-
+import { UserInfoContext } from '../routes/AppRouter';
 
 function CreateAccount() {
   const [firstName, setFirstName] = useState('');
@@ -22,7 +21,7 @@ function CreateAccount() {
   const [confirmPass, setConfirmPassword] = useState('');
   const [inputState, setInputState] = useState([true, true, true, true, true, true]);
 
-  const {userInfo, setUserInfo} = useContext(UserInfoContext);
+  const {userInfo, setUserInfo} = useContext(UserInfoContext)
 
   const navigate = useNavigate();
 
